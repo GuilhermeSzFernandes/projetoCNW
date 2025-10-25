@@ -1,0 +1,20 @@
+{
+  "name": "meu-projeto-node",
+  "version": "1.0.0",
+  "description": "Projeto Node.js básico",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Seu Nome",
+  "license": "MIT",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.1.10"
+  }
+}

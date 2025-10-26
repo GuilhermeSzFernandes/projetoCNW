@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+ 
+
     // Validar ao digitar
     if (passwordEl) passwordEl.addEventListener('input', validatePasswords);
     if (confirmEl) confirmEl.addEventListener('input', validatePasswords);

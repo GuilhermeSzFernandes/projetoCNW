@@ -1,33 +1,25 @@
+// Camada de pacotes
 require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { neon } = require("@neondatabase/serverless");
 
-const sql = neon(process.env.DATABASE_URL);
-
+// Indicando que vou usar como visualização o framework 'EJS' e que estão na pasta ./views
 app.set("view engine", "ejs");
 app.set("views", "./views");
+
+// Precisa disso para poder ler dados em json, posso usar em alguns momentos
 app.use(bodyParser.json());
+// Precisa disso para poder receber os dados do formulario de forma que o node possa ler
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Indica ao Express que ele deve usar está pasta para procurar arquivos mockados de acesso publico
 app.use(express.static("public"));
 
-//Testa o Banco e abre na pagina home
-app.get("/", async (req, res) => {
-    try {
-        const result = await sql`SELECT version()`;
-        const { version } = result[0];
-        res.render("pages/index"); 
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Erro ao conectar ao banco.");
-    }
-});
+// Criei um arquivo para rotas, assim deixa o arquivo origem mais limpo
+const indexRouter = require("./routes/index");
+app.use("/", indexRouter);
 
-// Página de login
-app.get("/login", (req, res) => {
-    res.render("pages/login");
-});
-
-// Inicia o servidor
+// Iniciando o servidor
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

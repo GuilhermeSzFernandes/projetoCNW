@@ -9,9 +9,9 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 
 // Precisa disso para poder ler dados em json, posso usar em alguns momentos
-app.use(bodyParser.json());
+app.use(express.json());
 // Precisa disso para poder receber os dados do formulario de forma que o node possa ler
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Indica ao Express que ele deve usar está pasta para procurar arquivos mockados de acesso publico
 app.use(express.static("public"));

@@ -1,9 +1,9 @@
 const { neon } = require("@neondatabase/serverless");
 const sql = neon(process.env.DATABASE_URL);
 const bcrypt = require('bcryptjs');
-const { DATETIME } = require("mysql/lib/protocol/constants/types");
+const jwt = require('jsonwebtoken');
 
-// Busca um usuário por email. Retorna o objeto usuário ou undefined.
+// Busca um usuário por email. 
 exports.BuscarUsuarioPorEmail = async (email) => {
     // Não usei `` com injeção $() pq pode ter sql injection
     const resultado = await sql.query('SELECT * FROM usuario WHERE email = $1', [email]);
@@ -13,23 +13,27 @@ exports.BuscarUsuarioPorEmail = async (email) => {
 exports.logar = async (email, senha) => {
     // LIMIT 1 para trazer apenas um registro
     const resultado = await sql.query('SELECT * FROM usuario WHERE email = $1 LIMIT 1', [email]);
-    const usuario = resultado && resultado.rows ? resultado.rows[0] : undefined;
-
-    if (!usuario) {
+    
+    if (resultado.length === 0) {
+        // Se não encontrou usuário com o e-mail
         return null;
     }
 
     try {
-        // bcrypt.compare é a função correta para comparar senha com hash
+        const usuario = resultado[0];
+        
+        // Valida a senha
         const valida = await bcrypt.compare(senha, usuario.senha_hash);
 
         if (!valida) return null;
 
-        // Não retornar o hash ao chamar o controller
-        const usuarioSemHash = { ...usuario };
-        delete usuarioSemHash.senha_hash;
+        const token = jwt.sign(
+            { id: usuario.usuario_id, email: usuario.email }, //Payload
+            process.env.JWT_SECRET,  // Chave JWT Secreta
+            { expiresIn: '1h' } // Tempo de Expiração
+        );
 
-        return usuarioSemHash;
+        return { usuario_id: usuario.usuario_id ,nome: usuario.nome , token: token };
     } catch (error) {
         console.error("Erro durante a comparação do hash:", error);
         return null;

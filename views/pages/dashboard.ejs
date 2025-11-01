@@ -2,38 +2,34 @@
 <html lang="pt-BR">
 <head>
     <%- include('../partials/head'); %>
-    <link rel="stylesheet" href="/CSS/index.css">
+    <link rel="stylesheet" href="/CSS/dashboard.css">
     <title>Dashboard</title>
 </head>
 <body>
     <%- include('../partials/header'); %>
 
     <main class="container" style="padding:32px;">
-        <h1>Bem-vindo ao Dashboard</h1>
-        <p>Esta é a sua área após o login. Não há lógica especial nesta página — apenas um layout inicial.</p>
+        <h1>Bem-vindo <span id="nomeUsuario" style="font-style: italic; "></span></h1>
 
-        <section style="display:flex; gap:16px; margin-top:24px; flex-wrap:wrap;">
-            <div style="flex:1 1 200px; padding:16px; border:1px solid #ddd; border-radius:8px; background:#fff;">
+        <section style="display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-top:24px;">
+            <div class="cards">
                 <h3>Resumo</h3>
                 <p>Espaço reservado para métricas e informações rápidas.</p>
             </div>
 
-            <div style="flex:1 1 200px; padding:16px; border:1px solid #ddd; border-radius:8px; background:#fff;">
-                <h3>Notícias</h3>
-                <p>Atualizações recentes e avisos aparecem aqui.</p>
+            <div class="cards">
+                <h3>GRUPOS</h3>
+
+                <div class="card-list" id="gruposList"></div>
             </div>
 
-            <div style="flex:1 1 200px; padding:16px; border:1px solid #ddd; border-radius:8px; background:#fff;">
-                <h3>Atalhos</h3>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/perfil">Perfil (exemplo)</a></li>
-                </ul>
-            </div>
+
         </section>
 
     </main>
 
     <%- include('../partials/footer'); %>
+
+<script src="/JS/dashboard.js"></script>
 </body>
 </html>

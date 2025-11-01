@@ -1,42 +1,97 @@
-// Validação de confirmação de senha no formulário de cadastro
+async function cadastrar(event) {
+    if (event) event.preventDefault();
+
+    //Elementos FRONT
+    const nomeEl = document.getElementById('nome');
+    const emailEl = document.getElementById('email');
+    const senhaEl = document.getElementById('senha');
+
+    const nome = nomeEl.value.trim();
+    const email = emailEl.value.trim();
+    const senha = senhaEl.value.trim();
+
+    const confirmSenhaEl = document.getElementById('confirmSenha');
+    const confirmMessage = document.getElementById('confirmMessage');
+
+    if (!nomeEl || !emailEl || !senhaEl || !confirmSenhaEl) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
+
+    // Valida se as senhas são iguais
+    if (senhaEl.value !== confirmSenhaEl.value) {
+        confirmMessage.style.display = 'block';
+        confirmSenhaEl.style.borderColor = 'crimson';
+        alert('As senhas não conferem.');
+        confirmSenhaEl.focus();
+        return;
+    } else {
+        if (confirmMessage) confirmMessage.style.display = 'none';
+        if (confirmSenhaEl) confirmSenhaEl.style.borderColor = '';
+    }
+
+    try {
+        const loader = document.querySelector('.loader-overlay');
+        if (loader) loader.style.display = 'flex';
+
+        const resposta = await fetch('/registrar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, email, senha })
+        });
+
+        const data = await resposta.json();
+
+        if (resposta.ok && data.success) {
+            alert('Cadastro realizado com sucesso!');
+            window.location.href = '/login';
+
+        } else {
+            alert('Erro ao realizar o cadastro. Tente novamente.');
+        }
+
+        loader.style.display = 'none';
+    } catch (err) {
+        console.error('Erro ao enviar cadastro:', err);
+        alert('Erro ao conectar com o servidor. Verifique sua conexão.');
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.login-form');
-    if (!form) return;
+    const btnRegister = document.getElementById('btnRegister');
 
     const senhaEl = document.getElementById('senha');
     const confirmSenhaEl = document.getElementById('confirmSenha');
     const confirmMessage = document.getElementById('confirmMessage');
 
-    function validatePasswords() {
-        if (!senhaEl || !confirmSenhaEl) return true; // nada a validar
+
+    // Valida se as senhas são iguais
+    function validaSenhas() {
+        if (!senhaEl || !confirmSenhaEl || !confirmMessage) return;
 
         const senha = senhaEl.value;
         const confSenha = confirmSenhaEl.value;
 
-        if (senha === confSenha) {
-            if (confirmMessage) confirmMessage.style.display = 'none';
-            confirmSenhaEl.style.borderColor = '';
-            return true;
-        } 
-        else {
-            if (confirmMessage) confirmMessage.style.display = 'block';
+        if (senha && confSenha && senha !== confSenha) {
+            confirmMessage.style.display = 'block';
             confirmSenhaEl.style.borderColor = 'crimson';
-            return false;
+        } else {
+            confirmMessage.style.display = 'none';
+            confirmSenhaEl.style.borderColor = '';
         }
     }
 
-    // Validar ao digitar
-    if (senhaEl) senhaEl.addEventListener('input', validatePasswords);
-    if (confirmSenhaEl) confirmSenhaEl.addEventListener('input', validatePasswords);
+    // Define metodos dos elementos
+    senhaEl.addEventListener('input', validaSenhas);
+    confirmSenhaEl.addEventListener('input', validaSenhas);
 
-    
-    // Interceptar submit do form
-    form.addEventListener('submit', (e) => {
-        if (!validatePasswords()) {
-            e.preventDefault();
-            // foco no campo de confirmação
-            if (confirmSenhaEl) confirmSenhaEl.focus();
-        }
-    });
+    if (form) {
+        form.addEventListener('submit', cadastrar);
+    }
+
+    if (btnRegister) {
+        btnRegister.addEventListener('click', cadastrar);
+    }
 });

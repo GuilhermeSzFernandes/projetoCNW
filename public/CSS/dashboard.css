@@ -1,0 +1,31 @@
+.cards {
+    padding: 16px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    background: #fff;   
+}
+
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* espaço entre os sub-cards */
+    margin-top: 12px;
+}
+
+.sub-card {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #eee;
+    transition: all 0.2s ease;
+    background: #f9f9f9;
+}
+
+.sub-card:hover {
+    background: #e0f0ff;
+    border-color: #80c1ff;
+    cursor: pointer;
+    transform: translateX(4px); /* leve efeito de movimento */
+}

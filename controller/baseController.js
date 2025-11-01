@@ -11,6 +11,5 @@ exports.registrarPage = (req, res) => {
 };
 
 exports.dashboardPage = (req, res) => {
-    // Página simples de dashboard (sem lógica de autenticação aqui)
     res.render("pages/dashboard");
 };

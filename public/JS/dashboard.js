@@ -14,15 +14,12 @@ async function carregarDados(){
 
 
     // Carregando Grupos
-    const resposta = await fetch('/listarGrupos', {
-        method: 'POST',
+    const resposta = await fetch(`/listarGrupos/${usuario_id}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `bearer ${token}`
         },
-        body: JSON.stringify({
-            usuario_id
-        })
     })
 
     const data = await resposta.json()

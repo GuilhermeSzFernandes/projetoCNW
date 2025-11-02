@@ -3,7 +3,7 @@ const model = require('../models/grupoModel');
 
 exports.listarGrupos = async (req, res) => {
     try{
-        const {usuario_id} = req.body;
+        const usuario_id = req.params.usuario_id;
 
         if(!usuario_id)
             return res.status(400).json({ message: 'ID de Usuario Obrigatorio' });

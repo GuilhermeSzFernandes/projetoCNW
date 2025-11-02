@@ -18,6 +18,9 @@ router.get("/registrar", baseController.registrarPage);
 // pagina dashboard
 router.get("/dashboard", baseController.dashboardPage);
 
+// Listar Grupos por usuario_id
+router.get("/listarGrupos/:usuario_id", gruposController.listarGrupos);
+
 // --- POST -----------------------
 
 // Recebe post do formulário de login
@@ -25,9 +28,6 @@ router.post('/login', autenticacaoController.login);
 
 // Rota para registrar um usuario
 router.post("/registrar", autenticacaoController.cadastrar)
-
-// Listar Grupos por usuario_id
-router.post("/listarGrupos", gruposController.listarGrupos);
 
 // Entra em Grupos por shareCode
 router.post("/entrarGrupo", gruposController.entrarGrupo);

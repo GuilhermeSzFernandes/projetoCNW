@@ -76,20 +76,3 @@ input:focus {
 .btn-login:hover {
     background-color: #3d4247;
 }
-
-.login-links {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-}
-
-.login-links a {
-    color: #50575e;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.login-links a:hover {
-    color: #3d4247;
-}

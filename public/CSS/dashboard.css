@@ -29,3 +29,139 @@
     cursor: pointer;
     transform: translateX(4px); /* leve efeito de movimento */
 }
+
+.header-dialog {
+    margin-bottom: 2rem;
+}
+
+.header-dialog h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #0a0a0a;
+}
+
+.header-dialog p {
+    font-size: 0.875rem;
+    color: #737373;
+}
+
+.otp-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.otp-input {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 2px solid #e5e5e5;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: all 0.2s;
+    background-color: #ffffff;
+    color: #0a0a0a;
+}
+
+.otp-input:focus {
+    border-color: #0a0a0a;
+    box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
+}
+
+.otp-input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.otpTraco {
+    align-self: center; 
+    font-size: 1.5rem; 
+    font-weight: 600; 
+    color: #0a0a0a; 
+    padding: 0 0.25rem; 
+}
+
+dialog {
+    margin: auto; 
+    width: 90%; 
+    max-width: 500px;
+    padding: 30px; 
+    border: none; 
+    border-radius: 10px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+    background-color: #ffffff;
+    z-index: 1000; 
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.8); 
+    backdrop-filter: blur(4px); 
+}
+
+dialog:not([open]) {
+    display: none;
+}
+
+select{
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+select:focus{
+    border-color: #50575e;
+    outline: none;
+}
+
+
+.btn-entrar {
+    width: 100%;
+    background-color: #50575e;
+    color: #fff;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;  
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #333; 
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 5px; 
+    transition: color 0.2s ease;
+    appearance: none;
+}
+
+.close-button:hover {
+    transition: 1s;
+    color: #ff0000;
+}
+
+@media (max-width: 640px) {
+    .otp-input {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.25rem;
+    }
+
+    .otp-container {
+        gap: 0.375rem;
+    }
+}

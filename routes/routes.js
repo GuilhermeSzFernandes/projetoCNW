@@ -29,4 +29,10 @@ router.post("/registrar", autenticacaoController.cadastrar)
 // Listar Grupos por usuario_id
 router.post("/listarGrupos", gruposController.listarGrupos);
 
+// Entra em Grupos por shareCode
+router.post("/entrarGrupo", gruposController.entrarGrupo);
+
+// Cria Grupos 
+router.post("/criarGrupo", gruposController.criarGrupo);
+
 module.exports = router;

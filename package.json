@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server.js"
   },
-  "author": "Seu Nome",
-  "license": "MIT",
+  "author": "Guilherme Fernandes",
+  "license": "Etec Antonio Furlan",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
     "bcryptjs": "^3.0.2",

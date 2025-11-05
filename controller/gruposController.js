@@ -1,6 +1,28 @@
 const e = require('express');
 const model = require('../models/grupoModel');
 
+exports.getGrupo = async (req, res) => {
+    const id_grupo = req.params.grupo_id;
+
+    try{
+
+        if(!id_grupo)
+            return res.status(400).json({message: 'ID do grupo obrigatorio'});
+        
+        const grupo = await model.carregarGrupo(id_grupo);
+        
+        if(!grupo)
+            return res.status(400).json({message: 'Grupo não encontrado'});
+        
+        return res.render('pages/grupo', { 
+            grupo: grupo[0],
+        });
+    }
+    catch{
+        return res.status(500).json({message: 'Erro interno do servidor'});
+    }
+}
+
 exports.listarGrupos = async (req, res) => {
     try{
         const usuario_id = req.params.usuario_id;

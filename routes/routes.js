@@ -9,7 +9,12 @@ const autenticacaoMidd = require("../middleware/autenticacao");
 // --- GET ------------------------
 
 // ValidarToken
-router.get("/ValidarToken", autenticacaoMidd);
+router.get("/ValidarToken", autenticacaoMidd, (req, res) => {
+    return res.status(200).json({
+        mensagem: "Token válido.",
+        user: req.user 
+    });
+});
 
 router.get("/", baseController.index); 
 
@@ -25,18 +30,21 @@ router.get("/dashboard",baseController.dashboardPage);
 // Listar Grupos por usuario_id
 router.get("/listarGrupos/:usuario_id", autenticacaoMidd,gruposController.listarGrupos);
 
+// Carregando dados por grupo
+router.get("/grupo/:grupo_id", autenticacaoMidd, gruposController.getGrupo);
+
 // --- POST -----------------------
 
 // Recebe post do formulário de login
-router.post('/login', autenticacaoController.login);
+router.post('/api/login', autenticacaoController.login);
 
 // Rota para registrar um usuario
-router.post("/registrar", autenticacaoController.cadastrar)
+router.post("/api/registrar", autenticacaoController.cadastrar)
 
 // Entra em Grupos por shareCode
-router.post("/entrarGrupo", autenticacaoMidd,gruposController.entrarGrupo);
+router.post("/api/entrarGrupo", autenticacaoMidd,gruposController.entrarGrupo);
 
 // Cria Grupos 
-router.post("/criarGrupo", autenticacaoMidd,gruposController.criarGrupo);
+router.post("/api/criarGrupo", autenticacaoMidd,gruposController.criarGrupo);
 
 module.exports = router;

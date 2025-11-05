@@ -1,15 +1,24 @@
 const token = localStorage.getItem('token');
 const usuario_id = localStorage.getItem('usuario_id');
 const nomeUsuario = localStorage.getItem('nomeUsuario');
-var loader = document.querySelector('.loader-overlay');
+const liLogin = document.querySelector("#liLogin")
+const liProfile = document.querySelector("#liProfile")
+const loader = document.querySelector('.loader-overlay');
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Valida o token
+    validaToken()
+
+    // Carrega os dados da pagina 
+    carregarDados();
+})
 
 const validaToken = async () => {
     const res = await fetch('/ValidarToken',  {
-        method: 'GET',
-        headers: {'Authorization': `Bearer ${token}`}
+        method: 'GET'
     })
 
-    if(res.status == 200){
+    if(res.status != 200){
         liProfile.style.display = "none"
         liHome.style.display = "none"
         liLogin.style.display = "block"
@@ -21,12 +30,6 @@ const validaToken = async () => {
         liLogin.style.display = "none";
     }
 }
-validaToken()
-
-const liLogin = document.querySelector("#liLogin")
-const liProfile = document.querySelector("#liProfile")
-liProfile.style.display = "block";
-liLogin.style.display = "none";
 
 async function carregarDados(){
     loader.style.display = 'flex';
@@ -77,8 +80,6 @@ async function carregarDados(){
     }
     loader.style.display = 'none';
 }
-
-carregarDados();
 
 // Pegando todos os inputs OTP
 const otpInputs = document.querySelectorAll(".otp-input")
@@ -187,7 +188,7 @@ async function entrarGrupo(){
     if(otpValue.trim() != null && otpValue.length == 6 ){
         const grupoCodigo = otpValue;
 
-        const resposta = await fetch('/entrarGrupo', {
+        const resposta = await fetch('/api/entrarGrupo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -233,7 +234,7 @@ async function cadastrarGrupo(){
     const nomeGrupo = document.querySelector("#nomeGrupo").value;
     const tipoGrupo = document.querySelector("#tipoGrupo").value;
 
-    const resposta = await fetch('/criarGrupo', {
+    const resposta = await fetch('/api/criarGrupo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

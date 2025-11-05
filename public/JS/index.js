@@ -3,10 +3,14 @@ const liLogin = document.querySelector("#liLogin")
 const liProfile = document.querySelector("#liProfile")
 const liHome = document.querySelector("#liHome")
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Valida o token
+    validaToken()
+})
+
 const validaToken = async () => {
     const res = await fetch('/ValidarToken',  {
-        method: 'GET',
-        headers: {'Authorization': `Bearer ${token}`}
+        method: 'GET'
     })
 
     if(res.status != 200){
@@ -20,7 +24,6 @@ const validaToken = async () => {
         liLogin.style.display = "none";
     }
 }
-validaToken()
 
 var textoHome = [
     "Familiar",

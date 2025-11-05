@@ -5,6 +5,15 @@ const { DATETIME } = require("mysql/lib/protocol/constants/types");
 const Utils = require('../Utils/suporte');
 const { json } = require("body-parser");
 
+exports.carregarGrupo = async (grupo_id) => {
+    const resultado = await sql.query('SELECT * from grupo where grupo_id = $1', [grupo_id])
+
+    if(!resultado)
+        return null
+
+    return resultado;
+}
+
 exports.BuscarGruposPorUsuarioId = async (usuario_id) => {
     const resultado = await sql.query('SELECT grupo.grupo_id , grupo.nome_grupo from grupo_membro inner join grupo on grupo.grupo_id = grupo_membro.grupo_id where usuario_id = $1', [usuario_id])
 

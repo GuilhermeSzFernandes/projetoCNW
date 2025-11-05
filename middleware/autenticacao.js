@@ -1,14 +1,8 @@
 const jwt = require("jsonwebtoken")
 
 const autenticacaoMiddleweare = (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-
-    if(!authHeader){
-        return res.status(401).json({error: "Forneça um token"});
-    }
-
     // Pega só o token
-    const token = authHeader.split(" ")[1];
+    const token = req.cookies.token;
 
     if(!token){
         return res.status(401).json({error: "Erro no token"});

@@ -13,7 +13,14 @@ exports.login = async (req, res) => {
 
         // Verifica se foi bem sucedido
         if (usuario) {
-            return res.status(200).json({ success: true, message: 'Autenticado', usuario });
+            res.cookie('token', usuario.token, {
+                httpOnly: true, // Impedindo que o cookie possa ser lido via .js
+                maxAge: 3600000, // 1 hora de validade
+                sameSite: 'Lax' // Segundo minha pesquisa permite apenas que o cookie do token seja usado no meu site ou em sites de um 'nivel superior'
+            });
+
+            return res.status(200).json({ success: true, message: 'Autenticado', usuario_id: usuario.usuario_id, nome: usuario.nome });
+            
         } else {
             return res.status(401).json({ success: false, message: 'Credenciais inválidas' });
         }

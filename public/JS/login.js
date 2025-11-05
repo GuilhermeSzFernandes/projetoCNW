@@ -23,7 +23,7 @@ async function logar(event) {
     try {
         const loader = document.querySelector('.loader-overlay');
 		loader.style.display = 'flex';
-        const resposta = await fetch('/login', {
+        const resposta = await fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, senha })
@@ -33,9 +33,8 @@ async function logar(event) {
 
         if (resposta.ok && data.success) {
             // Armazenando o Token
-            localStorage.setItem('token', data.usuario.token);
-            localStorage.setItem('usuario_id', data.usuario.usuario_id)
-            localStorage.setItem('nomeUsuario', data.usuario.nome)
+            localStorage.setItem('usuario_id', data.usuario_id)
+            localStorage.setItem('nomeUsuario', data.nome)
 
 			window.location.href = '/dashboard';
         } else {

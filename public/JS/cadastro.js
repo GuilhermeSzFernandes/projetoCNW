@@ -40,7 +40,7 @@ async function cadastrar(event) {
         const loader = document.querySelector('.loader-overlay');
         if (loader) loader.style.display = 'flex';
 
-        const resposta = await fetch('/registrar', {
+        const resposta = await fetch('/api/registrar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome, email, senha })

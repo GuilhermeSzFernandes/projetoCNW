@@ -13,3 +13,7 @@ exports.registrarPage = (req, res) => {
 exports.dashboardPage = (req, res) => {
     res.render("pages/dashboard");
 };
+
+exports.perfilPage = (req, res) => {
+    res.render("pages/perfil");
+};

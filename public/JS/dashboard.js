@@ -78,6 +78,35 @@ async function carregarDados(){
             modalEntrar.close();
         }
     }
+
+
+    const meses = ["NDevs", "Familia"];
+    const usuarios = [50, 100];
+
+    // Seleciona o canvas
+    const ctx = document.getElementById("graficoUsuarios");
+
+    // Cria o gráfico
+    new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: meses,
+        datasets: [{
+        label: "Contas",
+        data: usuarios,
+        borderWidth: 1,
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: "rgba(54, 162, 235, 1)"
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+        y: { beginAtZero: true }
+        }
+    }
+    });
+
     loader.style.display = 'none';
 }
 

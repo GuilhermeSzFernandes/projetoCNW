@@ -10,6 +10,13 @@ exports.BuscarUsuarioPorEmail = async (email) => {
     return resultado && resultado.rows ? resultado.rows[0] : undefined;
 };
 
+// Busca um usuário por id. 
+exports.BuscarUsuarioPorId = async (usuario_id) => {
+    // Não usei `` com injeção $() pq pode ter sql injection
+    const resultado = await sql.query('SELECT * FROM usuario WHERE usuario_id = $1', [usuario_id]);
+    return resultado && resultado[0] ? resultado[0] : undefined;
+};
+
 exports.logar = async (email, senha) => {
     // LIMIT 1 para trazer apenas um registro
     const resultado = await sql.query('SELECT * FROM usuario WHERE email = $1 LIMIT 1', [email]);
@@ -49,4 +56,34 @@ exports.cadastrar = async (nome, email, senha) => {
     }
     
     return null;    
+}
+
+exports.alterarSenha = async (usuario_id,senhaAntiga, senhaNova) => {
+    const resultado = await sql.query('SELECT * FROM usuario WHERE usuario_id = $1 LIMIT 1', [usuario_id]);
+    
+    if (resultado.length === 0) {
+        // Se não encontrou usuário com o e-mail
+        return null;
+    }
+
+    try {
+        const usuario = resultado[0];
+        
+        // Valida a senha
+        const valida = await bcrypt.compare(senhaAntiga, usuario.senha_hash);
+
+        if(valida)
+        {
+            const novaSenha_hash = await bcrypt.hash(senhaNova, 10)
+            const resultado = await sql.query('Update usuario set senha_hash = $1 where usuario_id = $2 RETURNING usuario_id', [novaSenha_hash, usuario_id])
+            
+            return resultado;
+        }
+        else{
+            return null;
+        }
+    }
+    catch(error){
+        return null;
+    }
 }

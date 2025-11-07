@@ -4,6 +4,7 @@
     <%- include('../partials/head'); %>
     <link rel="stylesheet" href="/CSS/dashboard.css">
     <link rel="stylesheet" href="/CSS/login.css"> <!-- Usando para reaproveitar estilos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Dashboard</title>
 </head>
 <body>
@@ -16,7 +17,7 @@
         <section style="display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-top:24px;">
             <div class="cards">
                 <h3>Resumo</h3>
-                <p>Espaço reservado para métricas e informações rápidas.</p>
+                <canvas id="graficoUsuarios"></canvas>
             </div>
 
             <div class="cards">

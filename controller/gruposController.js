@@ -1,4 +1,3 @@
-const e = require('express');
 const model = require('../models/grupoModel');
 
 exports.getGrupo = async (req, res) => {

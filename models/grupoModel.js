@@ -1,9 +1,6 @@
 const { neon } = require("@neondatabase/serverless");
 const sql = neon(process.env.DATABASE_URL);
-const bcrypt = require('bcryptjs');
-const { DATETIME } = require("mysql/lib/protocol/constants/types");
 const Utils = require('../Utils/suporte');
-const { json } = require("body-parser");
 
 exports.carregarGrupo = async (grupo_id) => {
     const resultado = await sql.query('SELECT * from grupo where grupo_id = $1', [grupo_id])
@@ -31,7 +28,7 @@ exports.EntrarEmGrupoPorCodigo = async (usuario_id, grupoCodigo) => {
         
         if (buscarGrupo.length > 0) {
             const grupo_id = buscarGrupo[0].grupo_id;
-            const inserir = await sql.query("insert into grupo_membro(grupo_id, usuario_id, data_Entrada) values ($1, $2, $3) RETURNING usuario_id", [grupo_id, usuario_id, new Date()])
+            const inserir = await sql.query("insert into grupo_membro(grupo_id, usuario_id) values ($1, $2, $3) RETURNING usuario_id", [grupo_id, usuario_id])
             
             if(!inserir)
                 return null;
@@ -57,11 +54,11 @@ exports.criarGrupo = async (usuario_id, nome_grupo, tipo_grupo) => {
         const shareCode = Utils.gerarCodigoDe6DigitosAleatorio();
         try{
             
-            const criarGrupo = await sql.query("insert into grupo(nome_grupo, tipo_grupo, sharecode, usuarioCriador, data_criacao) values ($1, $2, $3, $4, $5) RETURNING grupo_id", [nome_grupo, tipo_grupo, shareCode, usuario_id, new Date()])
+            const criarGrupo = await sql.query("insert into grupo(nome_grupo, tipo_grupo, sharecode, usuarioCriador) values ($1, $2, $3, $4) RETURNING grupo_id", [nome_grupo, tipo_grupo, shareCode, usuario_id])
             
             if(criarGrupo.length > 0){
                 const grupoCodigo = criarGrupo[0].grupo_id;
-                const loginUsuarioCriador = await sql.query("insert into grupo_membro(grupo_id, usuario_id, data_entrada) values($1, $2, $3) RETURNING data_entrada", [grupoCodigo, usuario_id, new Date()]) 
+                const loginUsuarioCriador = await sql.query("insert into grupo_membro(grupo_id, usuario_id) values($1, $2) RETURNING data_entrada", [grupoCodigo, usuario_id]) 
                 
                 if(loginUsuarioCriador.length > 0){
                     return criarGrupo

@@ -78,11 +78,18 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.8rem;
-    border-bottom: 1px solid #eee;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.item:last-child {
-    border-bottom: none;
+.item:hover {
+    background: #e0f0ff;
+    border-color: #80c1ff;
+    transform: translateX(4px);
 }
 
 .item-status {
@@ -92,6 +99,34 @@
     margin-right: 10px;
 }
 
+.sem-item {
+    text-align: center;
+    padding: 1.5rem;
+    color: #666;
+    font-style: italic;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border: 1px dashed #ddd;
+}
+
 .status-pendente { background-color: #f1c40f; }
 .status-pago { background-color: #2ecc71; }
 .status-atrasado { background-color: #e74c3c; }
+
+/* Dialog Style */
+dialog {
+    border: none;
+    border-radius: 8px;
+    padding: 2rem;
+    z-index: 9999; /* Menor que o z-index do loader */
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+label{
+    padding-bottom: 0px;
+    padding-top: 10px;
+}

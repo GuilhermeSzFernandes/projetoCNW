@@ -37,6 +37,9 @@ router.get("/listarGrupos/:usuario_id", autenticacaoMidd,gruposController.listar
 // Carregando dados por grupo
 router.get("/grupo/:grupo_id", autenticacaoMidd, gruposController.getGrupo);
 
+// Carregando Listas e Contas por grupo
+router.get("/listaContas/:grupo_id", autenticacaoMidd, gruposController.getListasEContas);
+
 // Carregando dados do Usuario
 router.get("/usuario/:usuario_id", autenticacaoMidd, usuarioController.getDadosUsuario);
 
@@ -49,11 +52,18 @@ router.post('/api/login', autenticacaoController.login);
 router.post("/api/registrar", autenticacaoController.cadastrar)
 
 // Entra em Grupos por shareCode
-router.post("/api/entrarGrupo", autenticacaoMidd,gruposController.entrarGrupo);
+router.post("/api/entrarGrupo", autenticacaoMidd, gruposController.entrarGrupo);
 
 // Cria Grupos 
-router.post("/api/criarGrupo", autenticacaoMidd,gruposController.criarGrupo);
+router.post("/api/criarGrupo", autenticacaoMidd, gruposController.criarGrupo);
 
-router.post("/api/alterarSenha", autenticacaoMidd,usuarioController.alterarSenhaUsuario);
+// Altera senha do Usuario
+router.post("/api/alterarSenha", autenticacaoMidd, usuarioController.alterarSenhaUsuario);
+
+// Cria lista no Grupo
+router.post("/api/criarLista", autenticacaoMidd, gruposController.criarLista)
+
+// Cria conta no grupo
+router.post("/api/criarConta", autenticacaoMidd, gruposController.criarConta)
 
 module.exports = router;

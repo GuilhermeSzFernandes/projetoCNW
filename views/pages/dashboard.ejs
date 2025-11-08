@@ -3,7 +3,6 @@
 <head>
     <%- include('../partials/head'); %>
     <link rel="stylesheet" href="/CSS/dashboard.css">
-    <link rel="stylesheet" href="/CSS/login.css"> <!-- Usando para reaproveitar estilos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Dashboard</title>
 </head>
@@ -26,14 +25,12 @@
                 <div class="card-list" id="gruposList"></div>
             </div>
         </section>
-
     </main>
 
     <!-- Loader de carregamento -->
     <div class="loader-overlay" style="display: none;">
         <div class="loader"></div>
     </div>
-
 
     <dialog id="dialogShareCode">
         <button id="btnCloseModal" class="close-button" aria-label="Fechar Modal">
@@ -43,7 +40,6 @@
             <h1>Junte-se à Galera!</h1>
             <p>Utilize o código de convite para se conectar com seu Grupo.</p>
         </div>
-
         <div class="otp-container">
             <input type="text" maxlength="1" class="otp-input" data-index="0" />
             <input type="text" maxlength="1" class="otp-input" data-index="1" />
@@ -53,8 +49,7 @@
             <input type="text" maxlength="1" class="otp-input" data-index="4" />
             <input type="text" maxlength="1" class="otp-input" data-index="5" />
         </div>
-        
-        <button id="btnEntarGrupoModal" type="button" class="btn-entrar">Entrar</button>
+                <button id="btnEntarGrupoModal" type="button" class="btn-send">Entrar</button>
         <div class="login-links">
             <a id="criarGrupoLinkModal">Criar Grupo!</a>
         </div>
@@ -66,8 +61,7 @@
                 <div class="form-group">
                     <label for="nomeGrupo">Nome do Grupo:</label>
                     <input type="text" id="nomeGrupo" name="nomeGrupo" placeholder="Digite o nome" required>
-                </div>
-
+                </div> 
                 <div class="form-group">
                     <label for="tipoGrupo">Tipo de Grupo</label>
                     <select id="tipoGrupo" name="tipoGrupo" required>
@@ -79,9 +73,7 @@
                         <option value="Republica">República</option>
                     </select>
                 </div>
-
-                <button id="btnCriarGrupo" type="button" class="btn-login">Criar</button>
-
+                <button id="btnCriarGrupo" type="button" class="btn-send">Criar</button>
                 <div class="login-links">
                     <a id="entrarGrupoLinkModal">Entrar em um Grupo!</a>
                 </div>

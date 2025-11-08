@@ -5,7 +5,7 @@ const autenticacaoMiddleweare = (req, res, next) => {
     const token = req.cookies.token;
 
     if(!token){
-        return res.status(401).json({error: "Erro no token"});
+        return res.status(401).json({error: "Erro no token"}).redirect('/');
     }
 
     try{

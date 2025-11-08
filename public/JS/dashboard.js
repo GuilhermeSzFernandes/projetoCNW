@@ -220,8 +220,7 @@ async function entrarGrupo(){
         const resposta = await fetch('/api/entrarGrupo', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `bearer ${token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 usuario_id,
@@ -266,8 +265,7 @@ async function cadastrarGrupo(){
     const resposta = await fetch('/api/criarGrupo', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `bearer ${token}`
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             nomeGrupo,

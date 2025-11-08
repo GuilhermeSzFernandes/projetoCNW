@@ -49,7 +49,7 @@ exports.logar = async (email, senha) => {
 
 exports.cadastrar = async (nome, email, senha) => {
     const senha_hash = await bcrypt.hash(senha, 10)
-    const resultado = await sql.query('insert into usuario(nome, email, senha_hash, data_cadastro) values ($1, $2, $3, $4) RETURNING usuario_id', [nome, email, senha_hash, new Date()])
+    const resultado = await sql.query('insert into usuario(nome, email, senha_hash) values ($1, $2, $3) RETURNING usuario_id', [nome, email, senha_hash])
     
     if(resultado != null){
         return resultado

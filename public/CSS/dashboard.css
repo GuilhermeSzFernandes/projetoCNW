@@ -85,27 +85,6 @@
     padding: 0 0.25rem; 
 }
 
-dialog {
-    margin: auto; 
-    width: 90%; 
-    max-width: 500px;
-    padding: 30px; 
-    border: none; 
-    border-radius: 10px; 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
-    background-color: #ffffff;
-    z-index: 1000; 
-}
-
-dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.8); 
-    backdrop-filter: blur(4px); 
-}
-
-dialog:not([open]) {
-    display: none;
-}
-
 select{
     width: 100%;
     padding: 0.8rem;
@@ -119,39 +98,6 @@ select{
 select:focus{
     border-color: #50575e;
     outline: none;
-}
-
-
-.btn-entrar {
-    width: 100%;
-    background-color: #50575e;
-    color: #fff;
-    border: none;
-    padding: 0.9rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;  
-    right: 10px;
-    background: transparent;
-    border: none;
-    color: #333; 
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-    padding: 5px; 
-    transition: color 0.2s ease;
-    appearance: none;
-}
-
-.close-button:hover {
-    transition: 1s;
-    color: #ff0000;
 }
 
 @media (max-width: 640px) {

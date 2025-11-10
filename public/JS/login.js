@@ -23,7 +23,7 @@ async function logar(event) {
     try {
         const loader = document.querySelector('.loader-overlay');
 		loader.style.display = 'flex';
-        const resposta = await fetch('/api/login', {
+        const resposta = await fetch('/api/usuario/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, senha })

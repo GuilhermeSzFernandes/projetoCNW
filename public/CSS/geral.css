@@ -120,33 +120,35 @@ main, .grupo-container {
 
 /* END footer Style*/
 
-/* Loader Style */
 .loader-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    inset: 0;
     display: none;
-    justify-content: center;
     align-items: center;
-    z-index: 10000; /* Número maior que o z-index do dialog */
-}   
+    justify-content: center;
+    background: rgba(0,0,0,0.35);
+    z-index: 11000;
+}
 
 .loader {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
+    width: 96px;
+    height: 96px;
+    border: 12px solid #f3f3f3;
+    border-top: 12px solid #3498db;
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
+
+.loader, .loader-overlay > .loader {
+    position: relative;
+}
+
 /* End Loader Style */
 
 
@@ -297,6 +299,22 @@ h2 {
 
 .btn-send:hover {
     background-color: #3d4247;
+}
+
+.btn-back {
+    width: 100%;
+    background-color: #db0f08;
+    color: #fff;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-back:hover {
+    background-color: #ff0000;
 }
 
 

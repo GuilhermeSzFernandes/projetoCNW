@@ -1,6 +1,16 @@
 const { neon } = require("@neondatabase/serverless");
 const sql = neon(process.env.DATABASE_URL);
 
+exports.getItemsLista = async (lista_id) => {
+    const resultado = await sql.query("SELECT item_lista.*, lista.nome_lista FROM item_lista left join lista on item_lista.lista_id = lista.lista_id where item_lista.lista_id = $1", [lista_id]);
+
+    if(resultado && resultado.length > 0){
+        return resultado
+    }
+    
+    return null
+}
+
 // Busca as Listas de um grupo especifico
 exports.getListas = async (grupo_id) => {
     const resultado = await sql.query("SELECT lista.*, count(IL.item_lista_id) as quantidade FROM lista LEFT JOIN item_lista IL on lista.lista_id = IL.lista_id where lista.grupo_id = $1 group by lista.lista_id", [grupo_id])
@@ -28,4 +38,19 @@ exports.criarLista = async ( grupo_id, nome_lista) => {
         return null
     }
     
+}
+
+exports.cadastraItem = async (lista_id, nome_item, quantidade, categoria_item, comprado) => {
+    try{
+        const resultado = await sql.query("insert into item_lista(lista_id, nome_item, quantidade, categoria_item, comprado) values($1, $2, $3, $4, $5) RETURNING item_lista_id",  [lista_id, nome_item, quantidade, categoria_item, comprado])
+
+        if(resultado && resultado.length > 0){
+            return resultado
+        }
+        
+        return null
+    }
+    catch(error){
+        return null
+    }
 }

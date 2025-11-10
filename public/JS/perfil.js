@@ -88,7 +88,7 @@ async function alterarSenha(usuario_id) {
     }
     
     try {
-        const response = await fetch('/api/alterarSenha', {
+        const response = await fetch('/api/usuario/alterarSenha', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

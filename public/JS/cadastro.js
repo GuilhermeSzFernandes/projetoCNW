@@ -26,7 +26,7 @@ async function cadastrar(event) {
 
     // Valida se as senhas são iguais
     if (senhaEl.value !== confirmSenhaEl.value) {
-        confirmMessage.style.display = 'block';
+        confirmMessage.style.display = 'flex';
         confirmSenhaEl.style.borderColor = 'crimson';
         alert('As senhas não conferem.');
         confirmSenhaEl.focus();
@@ -40,7 +40,7 @@ async function cadastrar(event) {
         const loader = document.querySelector('.loader-overlay');
         if (loader) loader.style.display = 'flex';
 
-        const resposta = await fetch('/api/registrar', {
+        const resposta = await fetch('/api/usuario/registrar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome, email, senha })
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const confSenha = confirmSenhaEl.value;
 
         if (senha && confSenha && senha !== confSenha) {
-            confirmMessage.style.display = 'block';
+            confirmMessage.style.display = 'flex';
             confirmSenhaEl.style.borderColor = 'crimson';
         } else {
             confirmMessage.style.display = 'none';

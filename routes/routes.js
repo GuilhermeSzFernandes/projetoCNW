@@ -5,9 +5,11 @@ const baseController = require('../controller/baseController')
 const gruposController = require('../controller/gruposController')
 const autenticacaoController = require('../controller/autenticacaoController')
 const usuarioController = require('../controller/usuarioController')
+const listaController = require('../controller/listaController')
+const contaController = require('../controller/contaController')
 const autenticacaoMidd = require("../middleware/autenticacao");
 
-// --- GET ------------------------
+// --- GET PAGINAS ------------------------
 
 // ValidarToken
 router.get("/ValidarToken", autenticacaoMidd, (req, res) => {
@@ -31,39 +33,47 @@ router.get("/dashboard",baseController.dashboardPage);
 // Rota para página de perfil
 router.get("/perfil", autenticacaoMidd, baseController.perfilPage);
 
+// --- GET ------------------------
+
 // Listar Grupos por usuario_id
-router.get("/listarGrupos/:usuario_id", autenticacaoMidd,gruposController.listarGrupos);
+router.get("/grupo/listarGrupos/:usuario_id", autenticacaoMidd,gruposController.listarGrupos);
 
 // Carregando dados por grupo
 router.get("/grupo/:grupo_id", autenticacaoMidd, gruposController.getGrupo);
 
 // Carregando Listas e Contas por grupo
-router.get("/listaContas/:grupo_id", autenticacaoMidd, gruposController.getListasEContas);
+router.get("/conta/listaContas/:grupo_id", autenticacaoMidd, gruposController.getListasEContas);
 
 // Carregando dados do Usuario
 router.get("/usuario/:usuario_id", autenticacaoMidd, usuarioController.getDadosUsuario);
 
+// Carrega dados de uma lista
+router.get("/lista/getItems/:lista_id", autenticacaoMidd, listaController.getItems)
+
 // --- POST -----------------------
 
 // Recebe post do formulário de login
-router.post('/api/login', autenticacaoController.login);
+router.post('/api/usuario/login', autenticacaoController.login);
 
 // Rota para registrar um usuario
-router.post("/api/registrar", autenticacaoController.cadastrar)
-
-// Entra em Grupos por shareCode
-router.post("/api/entrarGrupo", autenticacaoMidd, gruposController.entrarGrupo);
-
-// Cria Grupos 
-router.post("/api/criarGrupo", autenticacaoMidd, gruposController.criarGrupo);
+router.post("/api/usuario/registrar", autenticacaoController.cadastrar)
 
 // Altera senha do Usuario
-router.post("/api/alterarSenha", autenticacaoMidd, usuarioController.alterarSenhaUsuario);
+router.post("/api/usuario/alterarSenha", autenticacaoMidd, usuarioController.alterarSenhaUsuario);
 
-// Cria lista no Grupo
-router.post("/api/criarLista", autenticacaoMidd, gruposController.criarLista)
+// Entra em Grupos por shareCode
+router.post("/api/grupo/entrarGrupo", autenticacaoMidd, gruposController.entrarGrupo);
+
+// Cria Grupos 
+router.post("/api/grupo/criarGrupo", autenticacaoMidd, gruposController.criarGrupo);
 
 // Cria conta no grupo
-router.post("/api/criarConta", autenticacaoMidd, gruposController.criarConta)
+router.post("/api/conta/criarConta", autenticacaoMidd, contaController.criarConta) 
+
+// Cria lista no Grupo
+router.post("/api/lista/criarLista", autenticacaoMidd, listaController.criarLista)
+
+// Cria um item na lista
+router.post("/api/lista/cadastrarItem", autenticacaoMidd, listaController.cadastraItem)
 
 module.exports = router;

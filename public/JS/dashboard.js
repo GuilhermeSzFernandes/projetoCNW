@@ -39,7 +39,7 @@ async function carregarDados(){
 
 
     // Carregando Grupos
-    const resposta = await fetch(`/listarGrupos/${usuario_id}`, {
+    const resposta = await fetch(`/grupo/listarGrupos/${usuario_id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -217,7 +217,7 @@ async function entrarGrupo(){
     if(otpValue.trim() != null && otpValue.length == 6 ){
         const grupoCodigo = otpValue;
 
-        const resposta = await fetch('/api/entrarGrupo', {
+        const resposta = await fetch('/api/grupo/entrarGrupo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -262,7 +262,7 @@ async function cadastrarGrupo(){
     const nomeGrupo = document.querySelector("#nomeGrupo").value;
     const tipoGrupo = document.querySelector("#tipoGrupo").value;
 
-    const resposta = await fetch('/api/criarGrupo', {
+    const resposta = await fetch('/api/grupo/criarGrupo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

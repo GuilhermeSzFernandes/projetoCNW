@@ -40,9 +40,9 @@ exports.criarLista = async ( grupo_id, nome_lista) => {
     
 }
 
-exports.cadastraItem = async (lista_id, nome_item, quantidade, categoria_item, comprado) => {
+exports.cadastraItem = async (lista_id, nome_item, quantidade, categoria_item, comprado, valor_item) => {
     try{
-        const resultado = await sql.query("insert into item_lista(lista_id, nome_item, quantidade, categoria_item, comprado) values($1, $2, $3, $4, $5) RETURNING item_lista_id",  [lista_id, nome_item, quantidade, categoria_item, comprado])
+        const resultado = await sql.query("insert into item_lista(lista_id, nome_item, quantidade, categoria_item, comprado, valor_item) values($1, $2, $3, $4, $5, $6) RETURNING item_lista_id",  [lista_id, nome_item, quantidade, categoria_item, comprado, valor_item])
 
         if(resultado && resultado.length > 0){
             return resultado
@@ -52,5 +52,19 @@ exports.cadastraItem = async (lista_id, nome_item, quantidade, categoria_item, c
     }
     catch(error){
         return null
+    }
+}
+
+exports.atualizarItemComprado = async (item_lista_id, comprado) => {
+    try{
+        const resultado = await sql.query("UPDATE item_lista SET comprado = $1 WHERE item_lista_id = $2 RETURNING item_lista_id, comprado", [comprado ? 1 : 0, item_lista_id]); // Ternariozinho paracolocar 1 ou 0 no db ; )
+
+        if (resultado && resultado.length > 0) 
+            return resultado;
+
+        return null;
+    }
+    catch(error){
+        return null;
     }
 }

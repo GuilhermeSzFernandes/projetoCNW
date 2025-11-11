@@ -80,7 +80,7 @@ async function carregarDados(){
     }
 
 
-    const meses = ["NDevs", "Familia"];
+    const contas = ["Trabalho", "Familia"];
     const usuarios = [50, 100];
 
     // Seleciona o canvas
@@ -90,7 +90,7 @@ async function carregarDados(){
     new Chart(ctx, {
     type: "bar",
     data: {
-        labels: meses,
+        labels: contas,
         datasets: [{
         label: "Contas",
         data: usuarios,

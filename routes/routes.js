@@ -76,4 +76,10 @@ router.post("/api/lista/criarLista", autenticacaoMidd, listaController.criarList
 // Cria um item na lista
 router.post("/api/lista/cadastrarItem", autenticacaoMidd, listaController.cadastraItem)
 
+// PATCH -----------------------------
+
+// Patchs não lidam bem com o body, tive que fazer assim. (USei o patch pq é para atualizar propriedads unicas sem prsicsar enviar todo o cortpo, o certo seria objetos, mas não usei pq demora dms)
+router.patch('/api/item/:item_id', autenticacaoMidd, listaController.atualizarItem);
+
+
 module.exports = router;

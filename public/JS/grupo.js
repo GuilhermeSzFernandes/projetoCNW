@@ -64,7 +64,7 @@ function atualizarInterface(dados) {
     const listaContainer = document.querySelector('.lista-items');
     if (dados.listas && dados.listas.length > 0) {
         listaContainer.innerHTML = dados.listas.map(lista => `
-        <li class="item" onclick="abrirLista(${lista.lista_id})">
+        <li class="item" onclick="abrirLista(${lista.lista_id}, '${lista.nome_lista}')">
             <span>${lista.nome_lista}</span>
             <span>${lista.quantidade} items</span>
         </li>
@@ -180,7 +180,7 @@ function compartilharGrupo() {
     navigator.clipboard.writeText(codigo).then(() => alert('Código copiado para a área de transferência!')).catch(err => console.error('Erro ao copiar código:', err));
 }
 
-async function abrirLista(lista_id) {
+async function abrirLista(lista_id, nome_lista) {
     try {
         loader.style.display = 'flex';
 
@@ -198,7 +198,8 @@ async function abrirLista(lista_id) {
             const countEl = document.querySelector('#listaCount');
             const modalVerLista = document.querySelector('#dialogLista');
 
-            listaTitulo.textContent = data.resultado?.nome_lista || 'Lista';
+            if(nome_lista)
+                listaTitulo.textContent = nome_lista ;
         
             const itens = data.resultado || []; // garantindo que sempre vai ser um array para que ele não der erro de nulo caso não tenham itenss
             if (itens.length > 0) {//Verificando se ele já foi comprado para mudadar a classe
@@ -210,7 +211,7 @@ async function abrirLista(lista_id) {
                                 ${item.nome_item} <small class="item-qtd">x${item.quantidade || 1}</small> 
                             </span>
                         </label>
-                        <span class="item-valor">R$ ${Number(item.valor || 0).toFixed(2)}</span>
+                        <span class="item-valor">R$ ${Number(item.valor_item || 0).toFixed(2)}</span>
                     </li>
                 `).join('');// Se não tiver uma qtd especidifca é 1
             } else {
@@ -221,7 +222,7 @@ async function abrirLista(lista_id) {
             // soma total
             let soma = 0;
             itens.forEach(item => {
-                const valor = Number(item.valor || item.preco_unitario || 0);
+                const valor = Number(item.valor_item || 0);
                 const quantidade = Number(item.quantidade || 1);
                 soma += valor * quantidade;
             });
@@ -236,24 +237,38 @@ async function abrirLista(lista_id) {
             closeBtn.onclick = () => modalVerLista.close();
 
             // adiciona eventos às checkboxes (caso existam)
-            setTimeout(() => {
+            setTimeout(() => {            
+                // Chamada de evento para quando as checks de itens na lista forem alternadas
                 document.querySelectorAll('.item-checkbox').forEach(chk => {
                     chk.addEventListener('change', async (e) => {
                         const itemId = e.target.value;
                         const comprado = e.target.checked;
+                        const span = e.target.closest('label')?.querySelector('span'); // Usando closest para pegar a label de cada item, ele meio que pega o ancestral... PEesquisa melhor ai 
 
-                        // exemplo de atualização via PATCH
                         try {
-                            await fetch(`/api/lista/${lista_id}/item/${itemId}`, {
+                            const res = await fetch(`/api/item/${itemId}`, {
                                 method: 'PATCH',
-                                headers: { 'Content-Type': 'application/json' },
+                                headers: { 
+                                    'Content-Type': 'application/json'
+                                },
                                 body: JSON.stringify({ comprado })
                             });
-                            const span = e.target.closest('label').querySelector('span');
-                            if (comprado) span.classList.add('item-comprado');
-                            else span.classList.remove('item-comprado');
-                        } catch (err) {
+
+                            if (!res.ok) {
+                                // se der erro vreverte visual e estado
+                                e.target.checked = !comprado;
+                                span.classList.toggle('item-comprado', !comprado);
+                                alert('Erro ao atualizar item');
+                            } 
+                            else {
+                                span.classList.toggle('item-comprado', comprado);
+                            }
+                        } 
+                        catch (err) {
+                            e.target.checked = !comprado;
+                            span.classList.toggle('item-comprado', !comprado);
                             console.error('Erro ao atualizar item:', err);
+                            alert('Erro ao atualizar item');
                         }
                     });
                 });
@@ -266,9 +281,11 @@ async function abrirLista(lista_id) {
             };
         }
 
-    } catch (error) {
+    } 
+    catch (error) {
         alert(error);
-    } finally {
+    } 
+    finally {
         loader.style.display = 'none';
     }
 
@@ -283,6 +300,7 @@ document.getElementById('formCadastrarItem')?.addEventListener('submit', async (
     const lista_id = document.getElementById('item_lista_id').value;
     const nome = document.getElementById('nomeItem').value.trim();
     const quantidade = Number(document.getElementById('QuantidadeItem').value) || 1; 
+    const valor = Number(document.getElementById('ValorItem').value);
     const categoria_item = document.querySelector('#categoriaItem').value;
     const statusPagamento = document.querySelector('#statusCompraItem').value
 
@@ -305,13 +323,14 @@ document.getElementById('formCadastrarItem')?.addEventListener('submit', async (
                 nome_item: nome, 
                 quantidade, 
                 categoria_item,
-                comprado: statusPagamento
+                comprado: statusPagamento,
+                valor_item: valor
             })
         });
 
         if (res.ok) {
             modalCadastrarItem.close();
-            await abrirLista(lista_id);
+            await abrirLista(lista_id, null);
             await carregarDados_Contas_Listas();
         } else {
             const err = await res.json().catch(()=>({message:'Erro'}));

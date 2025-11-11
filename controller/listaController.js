@@ -39,10 +39,10 @@ exports.getItems = async (req, res) => {
 }
 
 exports.cadastraItem = async (req, res) => {
-    const {lista_id, nome_item, quantidade, categoria_item, comprado} = req.body
+    const {lista_id, nome_item, quantidade, categoria_item, comprado, valor_item} = req.body
 
     try{
-        const resultado = await model.cadastraItem(lista_id, nome_item, quantidade, categoria_item, comprado);
+        const resultado = await model.cadastraItem(lista_id, nome_item, quantidade, categoria_item, comprado, valor_item);
     
         if(resultado){
             res.status(200).json({message: 'Cadastrado!' ,resultado: resultado});
@@ -55,3 +55,23 @@ exports.cadastraItem = async (req, res) => {
         res.status(400).json({message: 'Erro ao cadastrar'})
     }
 }
+
+exports.atualizarItem = async (req, res) => {
+    const { item_id } = req.params;
+    const { comprado } = req.body;
+
+    if (!item_id) 
+        return res.status(400).json({ message: 'item_id obrigatório' });
+
+    try {
+        const resultado = await model.atualizarItemComprado(item_id, Boolean(comprado));
+        
+        if (!resultado) 
+            return res.status(500).json({ message: 'Erro ao atualizar item' });
+
+        return res.status(200).json({ message: 'Item atualizado', comprado: Boolean(comprado) });
+    } 
+    catch (error) {
+        return res.status(500).json({ message: error.message || 'Erro interno' });
+    }
+};
